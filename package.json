@@ -1,0 +1,23 @@
+{
+  "name": "render-config",
+  "version": "1.0.0",
+  "description": "all component of puckeditor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oarkflow/render-config.git"
+  },
+  "keywords": [
+    "puck",
+    "config"
+  ],
+  "author": "sunil sapkota",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oarkflow/render-config/issues"
+  },
+  "homepage": "https://github.com/oarkflow/render-config#readme"
+}
