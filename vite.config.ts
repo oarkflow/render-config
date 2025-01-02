@@ -1,9 +1,15 @@
 import path from 'path'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    dts({
+      insertTypesEntry: true,
+    })
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -17,13 +23,18 @@ export default defineConfig({
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', '@measured/puck'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          '@measured/puck': 'Puck'
         },
+        preserveModules: true,
+        preserveModulesRoot: 'src'
       },
     },
+    sourcemap: true,
+    minify: 'esbuild',
   },
 })

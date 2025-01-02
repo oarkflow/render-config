@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "../../../components/ui/skeleton";
 import React, { ReactNode, useEffect, useState } from "react";
 import { TextProps } from "../../types";
 import UpdateContent from "../../utils/ResolveContents";

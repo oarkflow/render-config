@@ -1,4 +1,4 @@
-import ErrorBoundary from "@/components/ErrorBoundary";
+import ErrorBoundary from "../../components/ErrorBoundary";
 import { Config } from "@measured/puck";
 import Button from "../components/elements/Button";
 import Column from "../components/elements/Column";
