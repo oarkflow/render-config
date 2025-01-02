@@ -1,5 +1,5 @@
 {
-  "name": "render-config",
+  "name": "@orgwarec/render-config",
   "version": "1.0.3",
   "type": "module",
   "scripts": {
