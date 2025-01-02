@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Computer,
   Laptop2Icon,
@@ -16,6 +17,19 @@ import "@measured/puck/dist/index.css";
 import handlePublish from "./config/handlePublish";
 import FieldsComponent from "./puck/FieldsComponent";
 import HeaderActions from "./puck/HeaderActions";
+
+export interface WebBuilderProps {
+  nodeId?: string;
+  initialData?: {
+    content: Array<{
+      type: string;
+      props: Record<string, any>;
+    }>;
+    root: {
+      title: string;
+    };
+  };
+}
 
 // Lazy load the Puck editor
 const PuckEditor = lazy(() =>
@@ -87,7 +101,7 @@ const MyPlugin: Plugin[] = [
         //   >
         //     Preview
         //   </Button>
-        // </>
+        // </div>
       ),
       // components: ComponentDesign,
       // outline: ({ children }) => <div>{children}hello</div>,
@@ -125,7 +139,7 @@ const MyPlugin: Plugin[] = [
   },
 ];
 
-export default function WebBuilder() {
+export default function WebBuilder(props: WebBuilderProps) {
   return (
     <ErrorBoundary>
       <Suspense
@@ -146,7 +160,7 @@ export default function WebBuilder() {
 
         <PuckEditor
           config={componentConfig}
-          data={initialData}
+          data={props.initialData || initialData}
           plugins={MyPlugin}
           onPublish={handlePublish}
           viewports={[
