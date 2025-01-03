@@ -1,6 +1,7 @@
 import { Render } from "@measured/puck";
+import "@measured/puck/puck.css";
+import "./../main.css";
 import { componentConfig } from "./config/components";
-
 export interface WebRendererProps {
   nodeId?: string;
   initialData?: {

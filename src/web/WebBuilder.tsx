@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ActionBar, Plugin } from "@measured/puck";
+import "@measured/puck/puck.css";
+import "./../main.css";
 import {
   Computer,
   Laptop2Icon,
@@ -9,11 +12,6 @@ import {
 import { Suspense, lazy } from "react";
 import ErrorBoundary from "./../components/ErrorBoundary";
 import { componentConfig } from "./config/components";
-
-// Import styles outside of lazy loading
-import { ActionBar, Plugin } from "@measured/puck";
-import "@measured/puck/dist/index.css";
-// import ComponentDesign from "./puck/ComponentDesign";
 import handlePublish from "./config/handlePublish";
 import FieldsComponent from "./puck/FieldsComponent";
 import HeaderActions from "./puck/HeaderActions";
