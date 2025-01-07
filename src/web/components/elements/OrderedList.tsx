@@ -107,6 +107,6 @@ const OrderedList: React.FC<OrderedListProps> = memo(
   }
 );
 
-OrderedList.displayName = "OrderedList";
+OrderedList.displayName = "Ordered List";
 
 export default OrderedList;

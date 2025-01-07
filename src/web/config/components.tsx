@@ -47,9 +47,11 @@ import {
 } from "./StyleConfig";
 import { PuckRichText } from "@tohuhono/puck-rich-text"
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-expect-error
 export const componentConfig: Config = {
   components: {
-    PuckRichText: PuckRichText,
+    "Rich Text": PuckRichText,
     Heading: {
       fields: {
         content: {
@@ -472,8 +474,8 @@ export const componentConfig: Config = {
     Basic: {
       components: ["Heading", "Text", "Image", "Link", "OrderedList", "UnorderedList"],
     },
-    Puck: {
-      components: ["PuckRichText"],
+    Advanced: {
+      components: ["Rich Text"],
     },
     Form: {
       components: ["Form", "Input","Button"],
