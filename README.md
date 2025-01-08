@@ -10,13 +10,69 @@ npm install @oarkflow/render-config
 
 ## Key Components
 
+## Key Components
+
 ### WebBuilder
 
 The WebBuilder component provides a drag-and-drop interface for building websites. It extends Puck editor's functionality with additional features for website construction.
 
+#### Props Interface
+
+```typescript
+interface WebBuilderProps {
+  // Optional unique identifier for the node
+  nodeId?: string;
+
+  // Initial data configuration
+  initialData?: {
+    content: Array<{
+      type: string;
+      props: Record<string, unknown>;
+    }>;
+    root: {
+      title: string;
+    };
+  };
+
+  // Viewport configurations for responsive design
+  viewports?: Array<{
+    width: number;
+    height: number | "auto";
+    label: string;
+    icon: JSX.Element;
+  }>;
+
+  // Array of plugins to extend functionality
+  plugin?: Plugin[];
+
+  // Callback function when publishing changes
+  onPublish?: (data: unknown) => void;
+}
+```
+
 ### WebRenderer
 
 The WebRenderer component is responsible for rendering the website based on the configuration created using WebBuilder.
+
+#### Props Interface
+
+```typescript
+interface WebRendererProps {
+  // Optional unique identifier for the node
+  nodeId?: string;
+
+  // Initial data configuration
+  initialData?: {
+    content: Array<{
+      type: string;
+      props: Record<string, unknown>;
+    }>;
+    root: {
+      title: string;
+    };
+  };
+}
+```
 
 ## Usage
 
@@ -133,7 +189,8 @@ const BuilderPage = () => {
     // Save to your backend or localStorage
   };
   const plugin = {
-    //puck editor plugins get more details from puck editor documentation [here](https://puckeditor.com/docs/extending-puck/plugins)
+    /* puck editor plugins get more details from puck editor 
+      documentation [here](https://puckeditor.com/docs/extending-puck/plugins) */
   };
   const viewports = [
     {
