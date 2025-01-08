@@ -25,14 +25,6 @@ jobs:
 
       - name: Configure npm authentication
         run: |
-          # Check if NPM_TOKEN is available (safe way, don't print it)
-          if [ -z "${{ vars.NPM_TOKEN }}" ]; then
-            echo "NPM_TOKEN is not set"
-            exit 1
-          else
-            echo "NPM_TOKEN is set"
-          fi
-
           # Set up .npmrc with the token
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           npm config set //registry.npmjs.org/:_authToken=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
