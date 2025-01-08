@@ -160,11 +160,13 @@ If you want to contribute to this plugin, follow these steps:
 When committing changes, use the following commit message conventions to automatically bump the package version:
 
 - For minor version bump (e.g., 1.1.0 -> 1.2.0):
+
   ```
   feat: your message here
   ```
 
 - For patch version bump (e.g., 1.1.0 -> 1.1.1):
+
   ```
   fix: your message here
   ```
