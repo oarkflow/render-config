@@ -35,7 +35,7 @@ jobs:
 
           # Set up .npmrc with the token
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+          npm config set //registry.npmjs.org/:_authToken=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
 
       - name: Set Git identity
         run: |
