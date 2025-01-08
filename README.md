@@ -11,21 +11,23 @@ npm install @oarkflow/render-config
 ## Key Components
 
 ### WebBuilder
+
 The WebBuilder component provides a drag-and-drop interface for building websites. It extends Puck editor's functionality with additional features for website construction.
 
 ### WebRenderer
+
 The WebRenderer component is responsible for rendering the website based on the configuration created using WebBuilder.
 
 ## Usage
 
 ```jsx
-import { WebBuilder, WebRenderer } from '@oarkflow/render-config';
+import { WebBuilder, WebRenderer } from "@oarkflow/render-config";
 
 // In your builder component
 const BuilderComponent = () => {
   const handleSave = (config) => {
     // Handle saving the website configuration
-    console.log('Website config:', config);
+    console.log("Website config:", config);
   };
 
   return (
@@ -71,6 +73,7 @@ const ViewerComponent = () => {
 If you want to contribute to this plugin, follow these steps:
 
 0. Create a branch related to code change
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -79,6 +82,7 @@ If you want to contribute to this plugin, follow these steps:
    Make your changes and ensure they follow the project's coding standards
 
 2. Commit and push the changes to GitHub
+
    ```bash
    git add .
    git commit -m "Your descriptive commit message"
@@ -86,6 +90,7 @@ If you want to contribute to this plugin, follow these steps:
    ```
 
 3. Update the package on npm
+
    ```bash
    npm login
    npm version patch
@@ -99,8 +104,8 @@ If you want to contribute to this plugin, follow these steps:
 Here's a complete example of how to use the library in a React application:
 
 ```jsx
-import React, { useState } from 'react';
-import { WebBuilder, WebRenderer } from '@oarkflow/render-config';
+import React, { useState } from "react";
+import { WebBuilder, WebRenderer } from "@oarkflow/render-config";
 
 // Define your custom components
 const customComponents = {
@@ -112,9 +117,9 @@ const customComponents = {
       </div>
     ),
     defaultProps: {
-      title: 'Welcome',
-      subtitle: 'Start building your website'
-    }
+      title: "Welcome",
+      subtitle: "Start building your website",
+    },
   },
   // Add more components as needed
 };
@@ -127,33 +132,37 @@ const BuilderPage = () => {
     setConfig(newConfig);
     // Save to your backend or localStorage
   };
+  const plugin = {
+    //puck editor plugins get more details from puck editor documentation [here](https://puckeditor.com/docs/extending-puck/plugins)
+  };
+  const viewports = [
+    {
+      width: number,
+      height: number | "auto",
+      label: "string",
+      icon: "icon react Node",
+    },
+  ];
 
   return (
     <WebBuilder
       components={customComponents}
-      onSave={handleSave}
+      onPublish={handleSave}
       initialConfig={config}
+      plugin={plugin}
+      viewports={viewports}
     />
   );
 };
 
 // Viewer Page Component
 const ViewerPage = ({ config }) => {
-  return (
-    <WebRenderer
-      config={config}
-      components={customComponents}
-    />
-  );
+  return <WebRenderer config={config} components={customComponents} />;
 };
 
 export { BuilderPage, ViewerPage };
 ```
 
-## License
-
-MIT
-
 ## Support
 
-For issues and feature requests, please create an issue on our GitHub repository.
+For issues and feature requests, please create an issue on our [Github](https://github.com/oarkflow/render-config) repository.
