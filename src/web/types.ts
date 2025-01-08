@@ -180,3 +180,17 @@ export interface InputProps extends BaseProps {
   labelSize?: string;
   borderRadius?: string;
 }
+
+export interface PuckProps {
+  nodeId?: string;
+  initialData?: {
+    content: Array<{
+      type: string;
+      props: Record<string, unknown>;
+    }>;
+    root: {
+      title: string;
+    };
+  };
+}
+

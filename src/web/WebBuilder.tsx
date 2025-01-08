@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ActionBar, Plugin } from "@measured/puck";
 import "@measured/puck/puck.css";
-import "./../main.css";
 import {
   Computer,
   Laptop2Icon,
@@ -11,22 +9,23 @@ import {
 } from "lucide-react";
 import { Suspense, lazy } from "react";
 import ErrorBoundary from "./../components/ErrorBoundary";
+import "./../main.css";
 import { componentConfig } from "./config/components";
 import handlePublish from "./config/handlePublish";
+import { DefaultData } from "./default";
 import FieldsComponent from "./puck/FieldsComponent";
 import HeaderActions from "./puck/HeaderActions";
+import { PuckProps } from "./types";
 
-export interface WebBuilderProps {
-  nodeId?: string;
-  initialData?: {
-    content: Array<{
-      type: string;
-      props: Record<string, any>;
-    }>;
-    root: {
-      title: string;
-    };
-  };
+export interface WebBuilderProps extends PuckProps {
+  viewports?: Array<{
+    width: number;
+    height: number | "auto";
+    label: string;
+    icon: JSX.Element;
+  }>;
+  plugin?: Plugin[];
+  onPublish?: (data: unknown) => void;
 }
 
 // Lazy load the Puck editor
@@ -35,109 +34,59 @@ const PuckEditor = lazy(() =>
     default: module.Puck,
   }))
 );
-let initialData = {
-  content: [
-    {
-      type: "Heading",
-      props: {
-        content: "Welcome to Website Builder",
-        textAlign: "center",
-        color: "#333",
-        backgroundColor: "#f0f0f0",
-        fontSize: "5.5rem",
-      },
-    },
-    {
-      type: "Text",
-      props: {
-        content:
-          "Start building your website by dragging components from the left sidebar.",
-      },
-    },
-  ],
-  root: { title: "My Website" },
-};
-
-const urlParams = new URLSearchParams(window.location.search);
-const nodeId = urlParams.get("nodeId");
-if (nodeId) {
-  // Todo : fetch website data of specific node id  and remove localstorage data
-  const data = localStorage.getItem(nodeId);
-  if (data) {
-    initialData = JSON.parse(data);
-  }
-}
-
-const MyPlugin: Plugin[] = [
-  {
-    overrides: {
-      actionBar: ({ children }) => (
-        <ActionBar label="Actions">
-          <ActionBar.Group>
-            {children}{" "}
-            <RefreshCw
-              height={16}
-              width={16}
-              className="self-center text-[#c3c3c3] mr-2 ml-1 cursor-pointer hover:text-[#646cff]"
-            />
-          </ActionBar.Group>
-        </ActionBar>
-      ),
-      fields: FieldsComponent,
-      headerActions: ({ children }) => (
-        <HeaderActions nodeId={nodeId} children={children} />
-        //   {children}
-        //   <Button
-        //     onClick={(e) => {
-        //       e.preventDefault();
-        //       const { appState } = usePuck();
-        //       const currentData = appState.data;
-        //       console.log(currentData,"currentData");
-        //       // handlePublish(currentData);
-        //       window.open(`/app-preview?nodeId=${nodeId}`, "_blank");
-        //      }}
-        //   >
-        //     Preview
-        //   </Button>
-        // </div>
-      ),
-      // components: ComponentDesign,
-      // outline: ({ children }) => <div>{children}hello</div>,
-      // preview: ({ children, editor }) => {
-      //   const handleDrop = (event) => {
-      //     event.preventDefault();
-
-      //     // Get the dragged item details
-      //     const draggedItem = JSON.parse(event.dataTransfer.getData("dragged-item"));
-
-      //     // Add the dropped item to the editor canvas
-      //     editor.addComponent({
-      //       id: draggedItem.itemKey,
-      //       label: draggedItem.label,
-      //       props: {},
-      //     });
-      //   };
-
-      //   const handleDragOver = (event) => {
-      //     event.preventDefault(); // Allow dropping
-      //   };
-
-      //   return (
-      //     <div
-      //       className="relative w-full h-full border border-dashed border-gray-400"
-      //       onDrop={handleDrop}
-      //       onDragOver={handleDragOver}
-      //     >
-      //       {children}
-      //     </div>
-      //   );
-      // },
-      // puck: ({ children }) => <div>{children}hi</div>,
-    },
-  },
-];
 
 export default function WebBuilder(props: WebBuilderProps) {
+  //if initial data is given directly
+  let initialData = props.initialData || DefaultData;
+  const urlParams = new URLSearchParams(window.location.search);
+  const nodeId = urlParams.get("nodeId");
+  //if not check for node id in url and fetch data from localstorage
+  if (!initialData) {
+    if (nodeId) {
+      // Todo : fetch website data of specific node id  and remove localstorage data
+      const data = localStorage.getItem(nodeId);
+      if (data) {
+        initialData = JSON.parse(data);
+      }
+    }
+  }
+
+  const MyPlugin: Plugin[] = props.plugin || [
+    {
+      overrides: {
+        actionBar: ({ children }) => (
+          <ActionBar label="Actions">
+            <ActionBar.Group>
+              {children}{" "}
+              <RefreshCw
+                height={16}
+                width={16}
+                className="self-center text-[#c3c3c3] mr-2 ml-1 cursor-pointer hover:text-[#646cff]"
+              />
+            </ActionBar.Group>
+          </ActionBar>
+        ),
+        fields: FieldsComponent,
+        headerActions: ({ children }) => (
+          <HeaderActions nodeId={nodeId} children={children} />
+          //   {children}
+          //   <Button
+          //     onClick={(e) => {
+          //       e.preventDefault();
+          //       const { appState } = usePuck();
+          //       const currentData = appState.data;
+          //       console.log(currentData,"currentData");
+          //       // handlePublish(currentData);
+          //       window.open(`/app-preview?nodeId=${nodeId}`, "_blank");
+          //      }}
+          //   >
+          //     Preview
+          //   </Button>
+          // </div>
+        ),
+      },
+    },
+  ];
   return (
     <ErrorBoundary>
       <Suspense
@@ -158,35 +107,37 @@ export default function WebBuilder(props: WebBuilderProps) {
 
         <PuckEditor
           config={componentConfig}
-          data={props.initialData || initialData}
+          data={props.initialData || DefaultData}
           plugins={MyPlugin}
           onPublish={handlePublish}
-          viewports={[
-            {
-              width: 1440,
-              height: "auto",
-              label: "Desktop",
-              icon: <Computer />,
-            },
-            {
-              width: 1280,
-              height: "auto",
-              label: "Laptop",
-              icon: <Laptop2Icon />,
-            },
-            {
-              width: 768,
-              height: "auto",
-              label: "Tablet",
-              icon: <Tablet />,
-            },
-            {
-              width: 375,
-              height: "auto",
-              label: "Mobile",
-              icon: <Smartphone />,
-            },
-          ]}
+          viewports={
+            props.viewports || [
+              {
+                width: 1440,
+                height: "auto",
+                label: "Desktop",
+                icon: <Computer />,
+              },
+              {
+                width: 1280,
+                height: "auto",
+                label: "Laptop",
+                icon: <Laptop2Icon />,
+              },
+              {
+                width: 768,
+                height: "auto",
+                label: "Tablet",
+                icon: <Tablet />,
+              },
+              {
+                width: 375,
+                height: "auto",
+                label: "Mobile",
+                icon: <Smartphone />,
+              },
+            ]
+          }
         />
       </Suspense>
     </ErrorBoundary>

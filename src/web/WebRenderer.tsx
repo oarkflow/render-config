@@ -2,26 +2,14 @@ import { Render } from "@measured/puck";
 import "@measured/puck/puck.css";
 import "./../main.css";
 import { componentConfig } from "./config/components";
-export interface WebRendererProps {
-  nodeId?: string;
-  initialData?: {
-    content: any[];
-    root: { title: string };
-  };
+import { DefaultData } from "./default";
+import { PuckProps } from "./types";
+export interface WebRendererProps extends PuckProps {
+  
 }
 
 export function WebRenderer({ nodeId, initialData }: WebRendererProps) {
-  let data = initialData || {
-    content: [
-      {
-        type: "Text",
-        props: {
-          content: "404 not found.",
-        },
-      },
-    ],
-    root: { title: "My Website" },
-  };
+  let data = initialData;
 
   if (!initialData && nodeId) {
     // Try to get data from localStorage if nodeId is provided and no initialData
@@ -31,5 +19,5 @@ export function WebRenderer({ nodeId, initialData }: WebRendererProps) {
     }
   }
 
-  return <Render config={componentConfig} data={data} />;
+  return <Render config={componentConfig} data={data || DefaultData} />;
 }
