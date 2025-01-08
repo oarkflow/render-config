@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - '*'
+      - "*"
 
 jobs:
   release:
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Use the appropriate Node.js version
+          node-version: "16" # Use the appropriate Node.js version
 
       - name: Install dependencies
         run: npm install
@@ -38,13 +38,13 @@ jobs:
 
           # Determine version bump based on the commit message
           if [[ "$COMMIT_MESSAGE" =~ ^.*"feat":.* ]]; then
-            VERSION=$(npm version minor --no-git-tag-version)
+            VERSION=$(npm version minor)
             echo "Bumping version to minor: $VERSION"
           elif [[ "$COMMIT_MESSAGE" =~ ^.*"fix":.* ]]; then
-            VERSION=$(npm version patch --no-git-tag-version)
+            VERSION=$(npm version patch)
             echo "Bumping version to patch: $VERSION"
           else
-            VERSION=$(npm version patch --no-git-tag-version)
+            VERSION=$(npm version patch)
             echo "Bumping version to patch (default): $VERSION"
           fi
 
