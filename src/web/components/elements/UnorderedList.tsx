@@ -107,6 +107,6 @@ const UnorderedList: React.FC<UnorderedListProps> = memo(
   }
 );
 
-UnorderedList.displayName = "OrderedList";
+UnorderedList.displayName = "Ordered List";
 
 export default UnorderedList;
