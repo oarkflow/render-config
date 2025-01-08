@@ -155,6 +155,24 @@ If you want to contribute to this plugin, follow these steps:
 
 4. Enjoy using the latest version in your projects!
 
+## Version Bumping
+
+When committing changes, use the following commit message conventions to automatically bump the package version:
+
+- For minor version bump (e.g., 1.1.0 -> 1.2.0):
+  ```
+  feat: your message here
+  ```
+
+- For patch version bump (e.g., 1.1.0 -> 1.1.1):
+  ```
+  fix: your message here
+  ```
+
+Any other commit message format will result in a patch version bump by default.
+
+The version bump occurs automatically when changes are pushed to the main branch through our GitHub Actions workflow.
+
 ## Example Use Case
 
 Here's a complete example of how to use the library in a React application:

@@ -1,0 +1,57 @@
+name: Publish NPM Package
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Use the appropriate Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Authenticate with npm
+        run: npm login --token ${{ secrets.NPM_TOKEN }}
+
+      - name: Check for changes
+        run: |
+          git fetch --prune --unshallow
+          git diff --exit-code || echo "Changes detected"
+
+      - name: Bump version based on commit messages and publish
+        run: |
+          # Get the latest commit message
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+
+          # Determine version bump based on the commit message
+          if [[ "$COMMIT_MESSAGE" =~ ^.*"feat":.* ]]; then
+            VERSION=$(npm version minor --no-git-tag-version)
+            echo "Bumping version to minor: $VERSION"
+          elif [[ "$COMMIT_MESSAGE" =~ ^.*"fix":.* ]]; then
+            VERSION=$(npm version patch --no-git-tag-version)
+            echo "Bumping version to patch: $VERSION"
+          else
+            VERSION=$(npm version patch --no-git-tag-version)
+            echo "Bumping version to patch (default): $VERSION"
+          fi
+
+          # Publish the package to npm
+          npm publish --access public
+
+          # Optionally, create a Git tag and push it
+          git tag -a "v$VERSION" -m "Release v$VERSION"
+          git push origin --tags
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
