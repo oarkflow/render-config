@@ -55,7 +55,7 @@ jobs:
             VERSION=$(npm version patch)   # Automatically updates version and creates a Git tag
             echo "Bumping version to patch (default): $VERSION"
           fi
-
+          npm version patch
           # Publish the package to npm
           npm publish --access public
 
