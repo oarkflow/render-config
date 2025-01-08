@@ -1,15 +1,16 @@
-import ErrorBoundary from "../../components/ErrorBoundary";
 import { Config } from "@measured/puck";
+import { PuckRichText } from "@tohuhono/puck-rich-text";
+import ErrorBoundary from "../../components/ErrorBoundary";
 import Button from "../components/elements/Button";
 import Column from "../components/elements/Column";
 import Form from "../components/elements/Form";
 import Heading from "../components/elements/Heading";
+import Image from "../components/elements/Image";
 import Input from "../components/elements/Input";
 import OrderedList from "../components/elements/OrderedList";
 import Table from "../components/elements/Table";
 import Text from "../components/elements/Text";
 import UnorderedList from "../components/elements/UnorderedList";
-import Image from "../components/elements/Image";
 import {
   ButtonProps,
   FormProps,
@@ -23,14 +24,11 @@ import {
 import {
   renderBGColorPicker,
   renderColorPicker,
+  renderContentField,
   renderPaddingPicker,
   renderTableDataButton,
 } from "./fieldRenderers";
-import { renderContentField } from "./fieldRenderers";
-import {
-  orderedListConfig,
-  unorderedListConfig,
-} from "./listConfig";
+import { orderedListConfig, unorderedListConfig } from "./listConfig";
 import {
   backgroundColorConfig,
   borderSizeConfig,
@@ -45,19 +43,17 @@ import {
   textAlignConfig,
   textTransformConfig,
 } from "./StyleConfig";
-import { PuckRichText } from "@tohuhono/puck-rich-text"
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-expect-error
 export const componentConfig: Config = {
   components: {
-    "Rich Text": PuckRichText,
+    "rich text": PuckRichText,
     Heading: {
       fields: {
         content: {
           type: "custom",
           label: "Content",
-          render: renderContentField
+          render: renderContentField,
         },
         tag: {
           type: "select",
@@ -110,7 +106,7 @@ export const componentConfig: Config = {
         content: {
           type: "custom",
           label: "Content",
-          render: renderContentField
+          render: renderContentField,
         },
         align: textAlignConfig,
         color: colorConfig,
@@ -380,14 +376,17 @@ export const componentConfig: Config = {
           ],
         },
         placeholder: { type: "text", label: "Placeholder" },
-        required: { type: "radio", options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false }
-        ]},
+        required: {
+          type: "radio",
+          options: [
+            { label: "Yes", value: true },
+            { label: "No", value: false },
+          ],
+        },
         labelColor: {
           type: "custom",
           label: "Label Color",
-          render: renderColorPicker
+          render: renderColorPicker,
         },
         labelSize: {
           type: "select",
@@ -395,8 +394,8 @@ export const componentConfig: Config = {
           options: [
             { label: "Small", value: "sm" },
             { label: "Medium", value: "base" },
-            { label: "Large", value: "lg" }
-          ]
+            { label: "Large", value: "lg" },
+          ],
         },
         borderRadius: {
           type: "select",
@@ -406,8 +405,8 @@ export const componentConfig: Config = {
             { label: "Small", value: "sm" },
             { label: "Medium", value: "md" },
             { label: "Large", value: "lg" },
-            { label: "Full", value: "full" }
-          ]
+            { label: "Full", value: "full" },
+          ],
         },
         color: colorConfig,
         backgroundColor: backgroundColorConfig,
@@ -428,7 +427,7 @@ export const componentConfig: Config = {
         backgroundColor: null,
         margin: null,
         padding: null,
-        tailwindClass: ""
+        tailwindClass: "",
       },
       render: (props: InputProps) => (
         <ErrorBoundary>
@@ -468,17 +467,24 @@ export const componentConfig: Config = {
           </ErrorBoundary>
         );
       },
-    }
+    },
   },
   categories: {
     Basic: {
-      components: ["Heading", "Text", "Image", "Link", "OrderedList", "UnorderedList"],
+      components: [
+        "Heading",
+        "Text",
+        "Image",
+        "Link",
+        "OrderedList",
+        "UnorderedList",
+      ],
     },
-    Advanced: {
-      components: ["Rich Text"],
+    Puck: {
+      components: ["rich text"],
     },
     Form: {
-      components: ["Form", "Input","Button"],
+      components: ["Form", "Input", "Button"],
     },
 
     Layout: {
