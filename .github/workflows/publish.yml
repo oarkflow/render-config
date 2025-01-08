@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - "*"
+      - '*'
 
 jobs:
   release:
@@ -17,14 +17,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # Use the appropriate Node.js version
+          node-version: '16'  # Use the appropriate Node.js version
 
       - name: Install dependencies
         run: npm install
 
-      - name: Authenticate with npm
+      - name: Configure npm authentication
         run: |
           npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+
+      - name: Set Git identity
+        run: |
+          git config --global user.email "suneelsapkota9@gmail.com   # Replace with your email
+          git config --global user.name "sunil-9"                    # Replace with your name
 
       - name: Check for changes
         run: |
@@ -38,13 +43,13 @@ jobs:
 
           # Determine version bump based on the commit message
           if [[ "$COMMIT_MESSAGE" =~ ^.*"feat":.* ]]; then
-            VERSION=$(npm version minor)
+            VERSION=$(npm version minor)   # Automatically updates version and creates a Git tag
             echo "Bumping version to minor: $VERSION"
           elif [[ "$COMMIT_MESSAGE" =~ ^.*"fix":.* ]]; then
-            VERSION=$(npm version patch)
+            VERSION=$(npm version patch)   # Automatically updates version and creates a Git tag
             echo "Bumping version to patch: $VERSION"
           else
-            VERSION=$(npm version patch)
+            VERSION=$(npm version patch)   # Automatically updates version and creates a Git tag
             echo "Bumping version to patch (default): $VERSION"
           fi
 
@@ -56,3 +61,4 @@ jobs:
           git push origin --tags
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
