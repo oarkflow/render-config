@@ -28,7 +28,7 @@ jobs:
 
       - name: Set Git identity
         run: |
-          git config --global user.email "suneelsapkota9@gmail.com   # Replace with your email
+          git config --global user.email "suneelsapkota9@gmail.com"   # Replace with your email
           git config --global user.name "sunil-9"                    # Replace with your name
 
       - name: Check for changes
