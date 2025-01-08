@@ -26,7 +26,7 @@ jobs:
       - name: Configure npm authentication
         run: |
           # Check if NPM_TOKEN is available (safe way, don't print it)
-          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+          if [ -z "${{ vars.NPM_TOKEN }}" ]; then
             echo "NPM_TOKEN is not set"
             exit 1
           else
