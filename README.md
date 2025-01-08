@@ -1,80 +1,159 @@
-# Vite Shadcn Boilerplate
+# React Website Builder Extension for Puck Editor
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/your-username/vite-shadcn-boilerplate/blob/main/LICENSE)
+A powerful React library that extends the Puck editor functionality to build and render websites with ease. This library provides two main components: `WebBuilder` and `WebRenderer` that work together to create a seamless website building experience.
 
-## Overview
+## Installation
 
-Welcome to the Vite Shadcn Boilerplate! This repository serves as a comprehensive starter template for rapidly setting up a Vite project integrated with Shadcn, React, Tailwind CSS, and TypeScript. With this boilerplate, you can jumpstart your development process, saving valuable time on configuration and setup.
+```bash
+npm install @oarkflow/render-config
+```
+
+## Key Components
+
+### WebBuilder
+The WebBuilder component provides a drag-and-drop interface for building websites. It extends Puck editor's functionality with additional features for website construction.
+
+### WebRenderer
+The WebRenderer component is responsible for rendering the website based on the configuration created using WebBuilder.
+
+## Usage
+
+```jsx
+import { WebBuilder, WebRenderer } from '@oarkflow/render-config';
+
+// In your builder component
+const BuilderComponent = () => {
+  const handleSave = (config) => {
+    // Handle saving the website configuration
+    console.log('Website config:', config);
+  };
+
+  return (
+    <WebBuilder
+      onSave={handleSave}
+      // Add your custom components and configurations
+      components={{
+        Hero: {
+          // Your hero component configuration
+        },
+        // Add more components as needed
+      }}
+    />
+  );
+};
+
+// In your viewer/renderer component
+const ViewerComponent = () => {
+  const config = {
+    // Your website configuration
+  };
+
+  return (
+    <WebRenderer
+      config={config}
+      // Additional props as needed
+    />
+  );
+};
+```
 
 ## Features
 
-- **Vite**: Lightning-fast development server and build tool for modern web development.
-- **Shadcn**: A powerful state management library for React, ensuring efficient and predictable state handling.
-- **React**: A popular JavaScript library for building user interfaces.
-- **Tailwind CSS**: A utility-first CSS framework that provides a set of pre-designed styles for rapid UI development.
-- **TypeScript**: A superset of JavaScript that adds static types, enhancing code quality and developer productivity.
+- Drag-and-drop website building interface
+- Component-based architecture
+- Real-time preview
+- Customizable components
+- Responsive design support
+- Easy integration with existing React applications
 
-## Getting Started
+## Contributing
 
-1. **Fork the Repository**: Start by forking this repository to your GitHub account.
+If you want to contribute to this plugin, follow these steps:
 
-2. **Clone the Repository**: Clone your forked repository locally using the following command:
+0. Create a branch related to code change
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-    ```bash
-    git clone https://github.com/your-username/vite-shadcn-boilerplate.git
-    ```
+1. Update the code
+   Make your changes and ensure they follow the project's coding standards
 
-3. **Install Dependencies**: Navigate to the project directory and install the required dependencies.
+2. Commit and push the changes to GitHub
+   ```bash
+   git add .
+   git commit -m "Your descriptive commit message"
+   git push origin feature/your-feature-name
+   ```
 
-    ```bash
-    cd vite-shadcn-boilerplate
-    npm install
-    ```
+3. Update the package on npm
+   ```bash
+   npm login
+   npm version patch
+   npm publish
+   ```
 
-4. **Run the Development Server**: Launch the development server to start building your application.
+4. Enjoy using the latest version in your projects!
 
-    ```bash
-    npm run dev
-    ```
+## Example Use Case
 
-5. **Build for Production**: When you're ready to deploy your application, create a production build.
+Here's a complete example of how to use the library in a React application:
 
-    ```bash
-    npm run build
-    ```
+```jsx
+import React, { useState } from 'react';
+import { WebBuilder, WebRenderer } from '@oarkflow/render-config';
 
-## Included Libraries
+// Define your custom components
+const customComponents = {
+  Hero: {
+    render: ({ title, subtitle }) => (
+      <div className="hero">
+        <h1>{title}</h1>
+        <p>{subtitle}</p>
+      </div>
+    ),
+    defaultProps: {
+      title: 'Welcome',
+      subtitle: 'Start building your website'
+    }
+  },
+  // Add more components as needed
+};
 
-- **@radix-ui/react-slot**: Component primitives for building unstyled, fully accessible UIs.
-- **class-variance-authority**: A utility for managing conditional CSS class variations.
-- **clsx**: A tiny utility for constructing className strings conditionally.
-- **lucide-react**: A library of simply designed, easily recognizable SVG icons for React.
-- **react**: The JavaScript library for building user interfaces.
-- **react-dom**: Entry point for React applications to interact with the DOM.
-- **tailwind-merge**: Utility functions for merging Tailwind CSS classes.
-- **tailwindcss-animate**: A plugin for animating Tailwind CSS classes.
+// Builder Page Component
+const BuilderPage = () => {
+  const [config, setConfig] = useState(null);
 
-## Development Tools
+  const handleSave = (newConfig) => {
+    setConfig(newConfig);
+    // Save to your backend or localStorage
+  };
 
-- **@typescript-eslint/eslint-plugin**: ESLint plugin for TypeScript.
-- **@typescript-eslint/parser**: TypeScript parser for ESLint.
-- **@vitejs/plugin-react**: Vite plugin for React.
-- **autoprefixer**: A PostCSS plugin to parse CSS and add vendor prefixes.
-- **eslint**: A pluggable linting utility for JavaScript and JSX.
-- **eslint-plugin-react-hooks**: ESLint plugin for React hooks.
-- **eslint-plugin-react-refresh**: ESLint plugin for React Refresh.
-- **postcss**: A tool for transforming styles with JavaScript plugins.
-- **tailwindcss**: A utility-first CSS framework for rapidly building custom designs.
-- **typescript**: A superset of JavaScript that adds static types.
+  return (
+    <WebBuilder
+      components={customComponents}
+      onSave={handleSave}
+      initialConfig={config}
+    />
+  );
+};
+
+// Viewer Page Component
+const ViewerPage = ({ config }) => {
+  return (
+    <WebRenderer
+      config={config}
+      components={customComponents}
+    />
+  );
+};
+
+export { BuilderPage, ViewerPage };
+```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT
 
-## Contribution
+## Support
 
-Contributions are welcome! Feel free to open issues or submit pull requests to enhance this boilerplate and make it even more powerful.
-
----
-
-**Happy coding!** 🚀
+For issues and feature requests, please create an issue on our GitHub repository.
