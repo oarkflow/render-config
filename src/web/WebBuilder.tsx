@@ -16,6 +16,7 @@ import { DefaultData } from "./default";
 import FieldsComponent from "./puck/FieldsComponent";
 import HeaderActions from "./puck/HeaderActions";
 import { PuckProps } from "./types";
+import CMSComponents from "./puck/CMSComponents";
 
 export interface WebBuilderProps extends PuckProps {
   viewports?: Array<{
@@ -54,6 +55,7 @@ export default function WebBuilder(props: WebBuilderProps) {
   const MyPlugin: Plugin[] = props.plugin || [
     {
       overrides: {
+        components: CMSComponents,
         actionBar: ({ children }) => (
           <ActionBar label="Actions">
             <ActionBar.Group>
