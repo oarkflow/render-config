@@ -3,21 +3,12 @@ import "@measured/puck/puck.css";
 import "./../main.css";
 import { componentConfig } from "./config/components";
 import { DefaultData } from "./default";
-import { PuckProps } from "./types";
-export interface WebRendererProps extends PuckProps {
-  
+export interface WebRendererProps{
+  data: unknown
 }
 
-export function WebRenderer({ nodeId, initialData }: WebRendererProps) {
-  let data = initialData;
+export function WebRenderer({  data }: WebRendererProps) {
 
-  if (!initialData && nodeId) {
-    // Try to get data from localStorage if nodeId is provided and no initialData
-    const storedData = localStorage.getItem(nodeId);
-    if (storedData) {
-      data = JSON.parse(storedData);
-    }
-  }
 
   return <Render config={componentConfig} data={data || DefaultData} />;
 }
