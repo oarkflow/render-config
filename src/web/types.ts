@@ -189,9 +189,6 @@ export interface PuckProps {
       type: string;
       props: Record<string, unknown>;
     }>;
-    root: {
-      title: string;
-    };
   };
   viewports?: Array<{
     width: number;
