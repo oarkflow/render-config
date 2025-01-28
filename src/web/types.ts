@@ -1,3 +1,4 @@
+import { Plugin } from "@measured/puck";
 export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 interface BaseProps {
@@ -182,8 +183,8 @@ export interface InputProps extends BaseProps {
 }
 
 export interface PuckProps {
-  nodeId?: string;
-  initialData?: {
+  key?: string;
+  initialData: {
     content: Array<{
       type: string;
       props: Record<string, unknown>;
@@ -192,5 +193,13 @@ export interface PuckProps {
       title: string;
     };
   };
+  viewports?: Array<{
+    width: number;
+    height: number | "auto";
+    label: string;
+    icon: JSX.Element;
+  }>;
+  plugin?: Plugin[];
+  onPublish: (data: unknown) => void;
+  onPreview: (data: unknown) => void;
 }
-

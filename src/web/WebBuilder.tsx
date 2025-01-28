@@ -11,22 +11,13 @@ import { Suspense, lazy } from "react";
 import ErrorBoundary from "./../components/ErrorBoundary";
 import "./../main.css";
 import { componentConfig } from "./config/components";
-import handlePublish from "./config/handlePublish";
+// import handlePublish from "./config/handlePublish";
 import { DefaultData } from "./default";
+import CMSComponents from "./puck/CMSComponents";
 import FieldsComponent from "./puck/FieldsComponent";
 import HeaderActions from "./puck/HeaderActions";
 import { PuckProps } from "./types";
-
-export interface WebBuilderProps extends PuckProps {
-  viewports?: Array<{
-    width: number;
-    height: number | "auto";
-    label: string;
-    icon: JSX.Element;
-  }>;
-  plugin?: Plugin[];
-  onPublish?: (data: unknown) => void;
-}
+export interface WebBuilderProps extends PuckProps {}
 
 // Lazy load the Puck editor
 const PuckEditor = lazy(() =>
@@ -35,25 +26,11 @@ const PuckEditor = lazy(() =>
   }))
 );
 
-export default function WebBuilder(props: WebBuilderProps) {
-  //if initial data is given directly
-  let initialData = props.initialData || DefaultData;
-  const urlParams = new URLSearchParams(window.location.search);
-  const nodeId = urlParams.get("nodeId");
-  //if not check for node id in url and fetch data from localstorage
-  if (!initialData) {
-    if (nodeId) {
-      // Todo : fetch website data of specific node id  and remove localstorage data
-      const data = localStorage.getItem(nodeId);
-      if (data) {
-        initialData = JSON.parse(data);
-      }
-    }
-  }
-
+export default function WebBuilder(props: PuckProps) {
   const MyPlugin: Plugin[] = props.plugin || [
     {
       overrides: {
+        components: CMSComponents,
         actionBar: ({ children }) => (
           <ActionBar label="Actions">
             <ActionBar.Group>
@@ -67,23 +44,25 @@ export default function WebBuilder(props: WebBuilderProps) {
           </ActionBar>
         ),
         fields: FieldsComponent,
-        headerActions: ({ children }) => (
-          <HeaderActions nodeId={nodeId} children={children} />
-          //   {children}
-          //   <Button
-          //     onClick={(e) => {
-          //       e.preventDefault();
-          //       const { appState } = usePuck();
-          //       const currentData = appState.data;
-          //       console.log(currentData,"currentData");
-          //       // handlePublish(currentData);
-          //       window.open(`/app-preview?nodeId=${nodeId}`, "_blank");
-          //      }}
-          //   >
-          //     Preview
-          //   </Button>
-          // </div>
-        ),
+        headerActions: ({ children }) => {
+          return (
+            <HeaderActions onPreview={props.onPreview} children={children} />
+            //   {children}
+            //   <Button
+            //     onClick={(e) => {
+            //       e.preventDefault();
+            //       const { appState } = usePuck();
+            //       const currentData = appState.data;
+            //       console.log(currentData,"currentData");
+            //       // handlePublish(currentData);
+            //       window.open(`/app-preview?nodeId=${nodeId}`, "_blank");
+            //      }}
+            //   >
+            //     Preview
+            //   </Button>
+            // </div>
+          );
+        },
       },
     },
   ];
@@ -96,20 +75,11 @@ export default function WebBuilder(props: WebBuilderProps) {
           </div>
         }
       >
-        {/* <div>
-          <Link
-            target="_blank"
-            className="text-2xl rounded-md bg-black text-gray-300 p-2 cursor-pointer font-bold text-center mt-4 z-30 absolute bottom-4 right-4"
-            to={`/app-preview?nodeId=${nodeId}`}
-          >
-            Preview
-          </Link> */}
-
         <PuckEditor
           config={componentConfig}
           data={props.initialData || DefaultData}
           plugins={MyPlugin}
-          onPublish={handlePublish}
+          onPublish={props.onPublish}
           viewports={
             props.viewports || [
               {
