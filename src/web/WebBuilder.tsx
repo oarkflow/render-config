@@ -77,8 +77,8 @@ export default function WebBuilder(props: PuckProps) {
       >
         <PuckEditor
           config={componentConfig}
-          data={props.initialData || DefaultData}
           plugins={MyPlugin}
+          data={props.initialData || DefaultData}
           onPublish={props.onPublish}
           viewports={
             props.viewports || [

@@ -1,8 +1,8 @@
+import PuckConfig from "@/components/puck/PuckConfig";
 import { Render } from "../packages/measured/puck";
 import "../packages/measured/puck/puck.css";
 import "./../main.css";
 import { DefaultData } from "./default";
-import componentConfig from "../components/puck/PuckConfig";
 export interface WebRendererProps{
   data: unknown
 }
@@ -10,5 +10,5 @@ export interface WebRendererProps{
 export function WebRenderer({  data }: WebRendererProps) {
 
 
-  return <Render config={componentConfig} data={data || DefaultData} />;
+  return <Render config={PuckConfig} data={data || DefaultData} />;
 }
