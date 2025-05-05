@@ -1,5 +1,5 @@
-import { PuckComponent } from "@measured/puck";
 import React from "react";
+import { PuckComponent } from "../../../../packages/measured/puck";
 
 interface ColumnProps {
   distribution?: "auto" | "manual";
@@ -35,11 +35,7 @@ const Column: PuckComponent<ColumnProps> = ({
     return span === "auto" || isNaN(numSpan) ? "0" : `${(numSpan / 12) * 100}%`;
   };
 
-  const containerClasses = 
-    "flex flex-wrap"+
-    tailwindClass || "-mx-4 gap-y-4"
-  ;
-
+  const containerClasses = "flex flex-wrap" + tailwindClass || "-mx-4 gap-y-4";
   return (
     <div className={containerClasses}>
       {effectiveColumns.map((column, index) => (

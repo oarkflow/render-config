@@ -1,13 +1,13 @@
-import React from 'react';
-import ErrorBoundary from "@/components/ErrorBoundary";
-import { usePuck } from '@measured/puck';
+import React from "react";
+import ErrorBoundary from "../../components/ErrorBoundary";
+import { usePuck } from "../../packages/measured/puck";
 
 // This is a component that will safely wrap PuckRichText
 // It can be used as a fallback when the component might render outside the Puck context
 export const RichTextWrapper: React.FC<Record<string, unknown>> = (props) => {
   // Check if we're in a Puck context
   let isPuckContext = true;
-  
+
   try {
     // This will throw an error if outside of Puck context
     usePuck();

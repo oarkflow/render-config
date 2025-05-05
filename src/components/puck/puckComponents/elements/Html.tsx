@@ -1,6 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import React, { useEffect, useState } from "react";
 import { HtmlProps } from "../../types";
+import { Skeleton } from "../../../ui/skeleton";
 
 const Html: React.FC<HtmlProps> = ({ content }) => {
   const [loading, setLoading] = useState(true);

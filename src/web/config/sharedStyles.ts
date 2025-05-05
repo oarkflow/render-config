@@ -1,4 +1,4 @@
-import { Field } from "@measured/puck";
+import { Field } from "../../packages/measured/puck";
 
 export const baseStyleFields = {
   textAlign: {

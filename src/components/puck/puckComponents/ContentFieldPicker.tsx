@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import React, { useState, useRef, useCallback, useEffect, ReactNode } from 'react';
 import { toast } from 'sonner';
-import { request } from '../../../lib/api';
+import { request } from '@/lib/api';
 import { MentionsInput, Mention } from 'react-mentions';
 import '../../../styles/react-mentions.css';
 import {
@@ -19,7 +19,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 
 interface ContentFieldPickerProps {
   value: string;

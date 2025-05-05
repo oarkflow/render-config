@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Config } from "@measured/puck";
+import { Config } from "../../packages/measured/puck";
 import {
   renderBGColorPicker,
   renderColorPicker,
@@ -35,7 +35,7 @@ export const ToggleField: React.FC<ToggleFieldProps> = ({
 
   const handleEnabledChange = (newEnabled: boolean) => {
     setEnabled(newEnabled);
-    onChange(newEnabled ? (value || options[0].value) : null);
+    onChange(newEnabled ? value || options[0].value : null);
   };
 
   return (
@@ -208,7 +208,9 @@ export const tailwindClass: Field = {
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-gray-700">Tailwind Classes</label>
+          <label className="text-sm font-medium text-gray-700">
+            Tailwind Classes
+          </label>
         </div>
         <textarea
           value={value || ""}

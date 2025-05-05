@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 import { rootDroppableId } from "../../lib/root-droppable-id";
 import { setupZone } from "../../lib/setup-zone";
-import { Config, Data, FieldProps, Metadata, UserGenerics } from "../../types";
+import { Config, Data,  Metadata, UserGenerics } from "../../types";
 
 type DropZoneRenderProps = {
   zone: string;

@@ -1,4 +1,4 @@
-import { Button } from "@measured/puck";
+import { Button } from "../../packages/measured/puck";
 
 import { ReactNode } from "react";
 // import handlePublish from "../config/handlePublish";

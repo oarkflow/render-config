@@ -4,7 +4,7 @@ import type { Plugin } from "@/packages/measured/puck";
 import FieldsComponent from "./plugin/FieldsComponent";
 import HeaderActions from "./plugin/HeaderActions";
 import CMSComponents from "./plugin/CMSComponents";
-import {CustomPuck} from "@/pages/CustomPuck";
+import { CustomPuck } from "./CustomPuck";
 
 const PuckPlugin: Plugin[] = [
   {

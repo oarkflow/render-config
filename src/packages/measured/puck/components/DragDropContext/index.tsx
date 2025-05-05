@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DragDropEvents } from "@dnd-kit/abstract";
+import { Data, DragDropEvents } from "@dnd-kit/abstract";
 import type { Draggable, Droppable } from "@dnd-kit/dom";
 import { AutoScroller, defaultPreset, DragDropManager } from "@dnd-kit/dom";
 import { DragDropProvider } from "@dnd-kit/react";
@@ -212,7 +213,7 @@ const DragDropContextClient = ({
       : defaultPreset.plugins),
     createNestedDroppablePlugin(
       {
-        onChange: (params, manager) => {
+        onChange: (params: DeepestParams , manager: DragDropManager<Draggable<Data>, Droppable<Data>>) => {
           const state = zoneStore.getState();
 
           const { zoneChanged, areaChanged } = getChanged(params, id);

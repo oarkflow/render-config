@@ -1,5 +1,5 @@
-import { ActionBar, Plugin } from "@measured/puck";
-import "@measured/puck/puck.css";
+import { ActionBar, Plugin } from "../packages/measured/puck";
+import "../packages/measured/puck/puck.css";
 import {
   Computer,
   Laptop2Icon,
@@ -21,7 +21,7 @@ export interface WebBuilderProps extends PuckProps {}
 
 // Lazy load the Puck editor
 const PuckEditor = lazy(() =>
-  import("@measured/puck").then((module) => ({
+  import("../packages/measured/puck").then((module) => ({
     default: module.Puck,
   }))
 );

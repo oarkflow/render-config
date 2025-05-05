@@ -1,7 +1,7 @@
-import { PuckComponent } from "@measured/puck";
 import { useEffect, useState, useCallback } from "react";
 import { TableData } from "../../types";
 import { GetValue } from "../../utils/ResolveContents";
+import { PuckComponent } from "../../../../packages/measured/puck";
 
 interface TableProps {
   content: TableData;
@@ -24,7 +24,7 @@ type FilterRule = {
   value: string;
 };
 
-const Table: PuckComponent<TableProps> = ({ 
+const Table: PuckComponent<TableProps> = ({
   content,
   headerBackground = "#f3f4f6",
   cellPadding = "0.5rem",
@@ -35,7 +35,7 @@ const Table: PuckComponent<TableProps> = ({
   cellTextColor,
   cellMinWidth = "120px",
   headerAlignment = "left",
-  bodyAlignment = "left"
+  bodyAlignment = "left",
 }) => {
   const [tableData, setTableData] = useState<TableDataArray>([]);
   const [loading, setLoading] = useState(true);
@@ -48,13 +48,13 @@ const Table: PuckComponent<TableProps> = ({
       path: string
     ): unknown => {
       if (obj === null || obj === undefined) return "";
-      
+
       return path.split(".").reduce<unknown>((current, key) => {
         if (current === null || current === undefined) return "";
         if (Array.isArray(current)) {
           return current[Number(key)] ?? ""; // Access array by index
         }
-        if (typeof current === 'object') {
+        if (typeof current === "object") {
           return (current as Record<string, unknown>)[key];
         }
         return "";
@@ -113,7 +113,7 @@ const Table: PuckComponent<TableProps> = ({
       selectedFields: string[] | undefined
     ): [unknown[], string] => {
       if (!response) return [[], ""];
-      
+
       // First, check if any of the selected fields directly point to an array
       if (selectedFields?.length) {
         for (const field of selectedFields) {
@@ -144,7 +144,7 @@ const Table: PuckComponent<TableProps> = ({
     },
     [getNestedValue]
   );
-  
+
   useEffect(() => {
     const fetchAndProcessData = async () => {
       try {
@@ -156,17 +156,24 @@ const Table: PuckComponent<TableProps> = ({
           return;
         }
 
-        if ((content?.mode === "manual" || content?.dataSource === "manual") && content.rows && content.headers) {
+        if (
+          (content?.mode === "manual" || content?.dataSource === "manual") &&
+          content.rows &&
+          content.headers
+        ) {
           // Handle manual data directly
           setTableData(content.rows as string[][]);
-        } else if ((content?.mode === "api" || content?.dataSource === "api") && content.apiPath) {
+        } else if (
+          (content?.mode === "api" || content?.dataSource === "api") &&
+          content.apiPath
+        ) {
           // Create API config from apiPath
           const apiConfig = {
             type: "rest",
             url: content.apiPath,
-            method: "GET" // Add method property to fix type error
+            method: "GET", // Add method property to fix type error
           };
-          
+
           const response = await GetValue(apiConfig);
           console.log("API Response:", response);
 
@@ -184,7 +191,8 @@ const Table: PuckComponent<TableProps> = ({
               return Object.entries(content.rules || {}).every(
                 ([field, rule]) => {
                   const typedRule = rule as FilterRule;
-                  if (typedRule.operator === "all" || !typedRule.value) return true;
+                  if (typedRule.operator === "all" || !typedRule.value)
+                    return true;
 
                   const fieldPath = arrayPath
                     ? field.replace(`${arrayPath}.`, "")
@@ -246,13 +254,20 @@ const Table: PuckComponent<TableProps> = ({
   }, [content, findArrayData, processDataForDisplay, getNestedValue]);
 
   // Apply styles
-  const borderStyle = borderSize && borderColor ? `${borderSize} solid ${borderColor}` : 'none';
+  const borderStyle =
+    borderSize && borderColor ? `${borderSize} solid ${borderColor}` : "none";
   const tableStyles = {
     border: borderStyle,
-    borderCollapse: 'collapse' as const,
+    borderCollapse: "collapse" as const,
   };
 
-  type CSSTextAlign = "left" | "center" | "right" | "justify" | "initial" | "inherit";
+  type CSSTextAlign =
+    | "left"
+    | "center"
+    | "right"
+    | "justify"
+    | "initial"
+    | "inherit";
 
   const headerCellStyles = {
     backgroundColor: headerBackground || undefined,
@@ -277,7 +292,8 @@ const Table: PuckComponent<TableProps> = ({
       <div className="p-4 border border-dashed border-gray-300 rounded">
         <div className="text-sm font-medium">Table (API Source)</div>
         <div className="text-xs text-gray-500">
-          {content.integrationName || "Integration"}{content.fieldName ? ` • ${content.fieldName}` : ''}
+          {content.integrationName || "Integration"}
+          {content.fieldName ? ` • ${content.fieldName}` : ""}
         </div>
       </div>
     );
@@ -331,12 +347,17 @@ const Table: PuckComponent<TableProps> = ({
       )}
 
       {/* Only show this info box if it's API mode and we're NOT in web-builder */}
-      {content?.mode === "api" && content?.apiPath && !window.location.pathname.includes("web-builder") && (
-        <div className="p-2 border border-dashed border-gray-300 rounded mt-2">
-          <p className="text-sm font-medium">Table (API Source)</p>
-          <p className="text-xs text-gray-500">{content.integrationName || "Integration"}{content.fieldName ? ` • ${content.fieldName}` : ''}</p>
-        </div>
-      )}
+      {content?.mode === "api" &&
+        content?.apiPath &&
+        !window.location.pathname.includes("web-builder") && (
+          <div className="p-2 border border-dashed border-gray-300 rounded mt-2">
+            <p className="text-sm font-medium">Table (API Source)</p>
+            <p className="text-xs text-gray-500">
+              {content.integrationName || "Integration"}
+              {content.fieldName ? ` • ${content.fieldName}` : ""}
+            </p>
+          </div>
+        )}
     </div>
   );
 };

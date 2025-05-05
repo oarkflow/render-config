@@ -1,4 +1,4 @@
-import { Config } from "@measured/puck";
+import { Config } from "../../packages/measured/puck";
 import { PuckRichText } from "@tohuhono/puck-rich-text";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import Button from "../components/elements/Button";

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plugin } from "@dnd-kit/abstract";
 import { DragDropManager } from "@dnd-kit/dom";
 
@@ -197,7 +198,7 @@ export const findDeepestCandidate = (
   };
 };
 
-export const createNestedDroppablePlugin = (
+export const createNestedDroppablePlugin:any = (
   { onChange }: NestedDroppablePluginOptions,
   id: string
 ) =>

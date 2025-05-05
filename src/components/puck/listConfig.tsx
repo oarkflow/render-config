@@ -1,4 +1,4 @@
-import { ComponentConfig } from "@measured/puck";
+import { ComponentConfig } from "../../packages/measured/puck";
 import {
   backgroundColorConfig,
   colorConfig,

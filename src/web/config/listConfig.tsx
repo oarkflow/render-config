@@ -1,4 +1,4 @@
-import { ComponentConfig } from "@measured/puck";
+import { ComponentConfig } from "../../packages/measured/puck";
 import {
   backgroundColorConfig,
   colorConfig,
@@ -14,7 +14,6 @@ import {
   ToggleFieldProps,
 } from "./StyleConfig";
 import ListItemsField from "./componentConfigs/ListItemsField";
-
 
 const renderToggleField = ({
   value,
@@ -88,9 +87,18 @@ export const orderedListConfig: ComponentConfig = {
     spacing: "normal",
   },
   render: function (props): JSX.Element {
-    const { items = [], listStyle = "decimal", listStylePosition = "outside", ...rest } = props;
-    const safeItems = Array.isArray(items?.items) ? items.items : Array.isArray(items) ? items : [];
-    
+    const {
+      items = [],
+      listStyle = "decimal",
+      listStylePosition = "outside",
+      ...rest
+    } = props;
+    const safeItems = Array.isArray(items?.items)
+      ? items.items
+      : Array.isArray(items)
+      ? items
+      : [];
+
     return (
       <ol style={{ listStyle, listStylePosition }} {...rest}>
         {safeItems.map((item: { content: string }, index: number) => (
@@ -98,7 +106,7 @@ export const orderedListConfig: ComponentConfig = {
         ))}
       </ol>
     );
-  }
+  },
 };
 
 export const unorderedListConfig: ComponentConfig = {
@@ -157,9 +165,18 @@ export const unorderedListConfig: ComponentConfig = {
     spacing: "normal",
   },
   render: (props) => {
-    const { items = [], listStyle = "disc", listStylePosition = "outside", ...rest } = props;
-    const safeItems = Array.isArray(items?.items) ? items.items : Array.isArray(items) ? items : [];
-    
+    const {
+      items = [],
+      listStyle = "disc",
+      listStylePosition = "outside",
+      ...rest
+    } = props;
+    const safeItems = Array.isArray(items?.items)
+      ? items.items
+      : Array.isArray(items)
+      ? items
+      : [];
+
     return (
       <ul style={{ listStyle, listStylePosition }} {...rest}>
         {safeItems.map((item: { content: string }, index: number) => (

@@ -35,7 +35,7 @@ const getStyles = (styleSheet?: CSSStyleSheet) => {
   if (styleSheet) {
     try {
       return [...styleSheet.cssRules].map((rule) => rule.cssText).join("");
-    } catch  {
+    } catch {
       console.warn(
         "Access to stylesheet %s is denied. Ignoring…",
         styleSheet.href

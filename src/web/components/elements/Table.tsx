@@ -1,4 +1,4 @@
-import { PuckComponent } from "@measured/puck";
+import { PuckComponent } from "../../../packages/measured/puck";
 import { useEffect, useState } from "react";
 import { TableData } from "../../types";
 import { GetValue } from "../../utils/ResolveContents";

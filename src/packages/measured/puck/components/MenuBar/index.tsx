@@ -21,7 +21,6 @@ export function MenuBar<UserData extends Data>({
   renderHeaderActions,
   setMenuOpen,
 }: {
- 
   appState: AppState<UserData>;
   dispatch: (action: PuckAction) => void;
   onPublish?: (data: UserData) => void;

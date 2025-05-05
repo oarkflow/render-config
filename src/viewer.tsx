@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/web/viewer.tsx
-import { Render } from "@measured/puck";
+import { Render } from "./packages/measured/puck";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { pageTemplateApi } from "@/components/puck/utils/Api";
-import PuckConfig from "@/components/puck/PuckConfig";
+import { pageTemplateApi } from "./components/puck/utils/Api";
+import PuckConfig from "./components/puck/PuckConfig";
 
 export default function WebViewer() {
   const { pageTemplateId } = useParams();
