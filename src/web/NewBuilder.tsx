@@ -2,39 +2,25 @@
 // Editor.jsx
 import PuckConfig from "../components/puck/PuckConfig";
 import PuckPlugin from "../components/puck/PuckPlugin";
-import { pageTemplateApi } from "../components/puck/utils/Api";
 import { Puck } from "../packages/measured/puck";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import PublishPopup from "../components/puck/PublishPopup";
 import { PuckProps } from "./types";
-import {  Plugin } from "../packages/measured/puck";
+import { Plugin } from "../packages/measured/puck";
 import { DefaultData } from "./default";
 import { Computer, Laptop2Icon, Smartphone, Tablet } from "lucide-react";
 // Render Puck editor
 export default function WebBuilder(props: PuckProps) {
   const MyPlugin: Plugin[] = [...(props.plugin || []), ...PuckPlugin];
-
-  const { pageTemplateId } = useParams() ?? { pageTemplateId: 123 };
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>({});
-  const [pageId, setPageId] = useState<number>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!pageTemplateId) {
-          navigate("/web/pages");
-          return;
-        }
-
-        const templateData = await pageTemplateApi.getTemplateById(
-          pageTemplateId
-        );
-        const apiData = templateData.metadata
-          ? JSON.parse(templateData.metadata)
+        const apiData = props.initialData
+          ? JSON.parse(props.initialData as any)
           : {};
         if (apiData.builder) {
           setData(apiData.builder);
@@ -45,17 +31,15 @@ export default function WebBuilder(props: PuckProps) {
             JSON.stringify(apiData.datasource.localData)
           );
         }
-        setPageId(templateData.page_template_id as number);
       } catch (error) {
         console.error("Error fetching template:", error);
-        navigate("/web/pages");
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [pageTemplateId, navigate]);
+  }, [props.initialData]);
   const [showPopup, setShowPopup] = useState(false);
   if (loading) {
     return <div>Loading...</div>;
@@ -69,22 +53,23 @@ export default function WebBuilder(props: PuckProps) {
     return data;
   };
   const handleSaveImageClick = async (puckData: any) => {
-    if (!pageId) return;
-    try {
-      //   await generateImageAndUpdate();
-      await pageTemplateApi.updateTemplate({
-        id: pageId as number,
-        updates: {
-          metadata: JSON.stringify(removeCustomElements(puckData)),
-        },
-      });
-      toast.success("Image saved and template updated successfully");
-    } catch (error) {
-      console.error("Error processing image:", error);
-      toast.error("Failed to save and upload image");
-    } finally {
-      // setIsLoading(false);
-    }
+    console.log(puckData);
+    // if (!pageId) return;
+    // try {
+    //   //   await generateImageAndUpdate();
+    //   await pageTemplateApi.updateTemplate({
+    //     id: pageId as number,
+    //     updates: {
+    //       metadata: JSON.stringify(removeCustomElements(puckData)),
+    //     },
+    //   });
+    //   toast.success("Image saved and template updated successfully");
+    // } catch (error) {
+    //   console.error("Error processing image:", error);
+    //   toast.error("Failed to save and upload image");
+    // } finally {
+    //   // setIsLoading(false);
+    // }
   };
 
   // Function to generate image, upload it, and update template

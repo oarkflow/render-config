@@ -1,5 +1,5 @@
 import { ActionBar, Plugin } from "../packages/measured/puck";
-import "../packages/measured/puck/puck.css";
+
 import {
   Computer,
   Laptop2Icon,
