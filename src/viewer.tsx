@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// src/pages/web/viewer.tsx
 import { Render } from "@measured/puck";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -40,18 +41,3 @@ export default function WebViewer() {
 
   return <Render config={PuckConfig} data={data} />;
 }
-
-// import { Render } from "@measured/puck";
-// import "@measured/puck/puck.css";
-// import "./../main.css";
-// import { componentConfig } from "./config/components";
-// import { DefaultData } from "./default";
-// export interface WebRendererProps{
-//   data: unknown
-// }
-
-// export function WebRenderer({  data }: WebRendererProps) {
-
-
-//   return <Render config={componentConfig} data={data || DefaultData} />;
-// }
