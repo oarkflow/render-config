@@ -71,7 +71,7 @@ export const Canvas = () => {
 		if (ui.viewports.current.height === "auto") {
 			setZoomConfig({
 				...zoomConfig,
-				rootHeight: frameHeight / zoomConfig.zoom,
+				rootHeight: zoomConfig.zoom ? frameHeight / zoomConfig.zoom : frameHeight,
 			});
 		}
 	}, [zoomConfig.zoom]);
