@@ -30,18 +30,12 @@ const PuckEditor = lazy(() =>
 );
 
 export default function WebBuilder(props: WebBuilderProps) {
-  const [isLoading, setIsLoading] = useState(false);
-
   const handlePreviewClick = () => {
-    setIsLoading(true);
     props.onPreview?.(props.initialData);
-    setTimeout(() => setIsLoading(false), 1000);
   };
 
   const handlePublishClick = () => {
-    setIsLoading(true);
     props.onPublish?.(props.initialData);
-    setTimeout(() => setIsLoading(false), 1000);
   };
 
   const MyPlugin: Plugin[] = [
@@ -53,7 +47,7 @@ export default function WebBuilder(props: WebBuilderProps) {
           <HeaderActions
             handlePreviewClick={handlePreviewClick}
             handlePublishClick={handlePublishClick}
-            isLoading={isLoading}
+            isLoading={props.isLoading ?? false}
           />
         ),
         puck: () => (
@@ -61,7 +55,7 @@ export default function WebBuilder(props: WebBuilderProps) {
             dataKey={"key-1"}
             handlePreviewClick={handlePreviewClick}
             handlePublishClick={handlePublishClick}
-            isLoading={isLoading}
+            isLoading={props.isLoading ?? false}
           />
         ),
       },
