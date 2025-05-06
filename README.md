@@ -5,10 +5,8 @@ A powerful React library that extends the Puck editor functionality to build and
 ## Installation
 
 ```bash
-npm install @oarkflow/render-config
+npm install @orgwarec/render-config
 ```
-
-## Key Components
 
 ## Key Components
 
