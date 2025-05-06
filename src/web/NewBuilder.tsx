@@ -2,17 +2,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Editor.jsx
 import PuckConfig from "../components/puck/PuckConfig";
-import PuckPlugin from "../components/puck/PuckPlugin";
+// import PuckPlugin from "../components/puck/PuckPlugin"
 import { PuckProps } from "./types";
 import { Plugin } from "../packages/measured/puck";
 import { DefaultData } from "./default";
 import { Computer, Eye, Globe, Laptop2Icon, Smartphone, Tablet } from "lucide-react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import CMSComponents from "@/components/puck/plugin/CMSComponents";
 import FieldsComponent from "@/components/puck/plugin/FieldsComponent";
 import { Button } from "@/components/ui";
 import { CustomPuck } from "@/components/puck/CustomPuck";
+import HeaderActions from "@/components/puck/plugin/HeaderActions";
 // Render Puck editor
 export interface WebBuilderProps extends PuckProps {}
 const PuckEditor = lazy(() =>
@@ -23,24 +24,40 @@ const PuckEditor = lazy(() =>
 
 
 export default function WebBuilder(props: WebBuilderProps) {
-  const MyPlugin: Plugin[] = [...(props.plugin || []), 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlePreviewClick = () => {
+    setIsLoading(true);
+    props.onPreview?.(props.initialData);
+    setTimeout(() => setIsLoading(false), 1000);
+  };
+
+  const handlePublishClick = () => {
+    setIsLoading(true);
+    props.onPublish?.(props.initialData);
+    setTimeout(() => setIsLoading(false), 1000);
+  };
+
+  const MyPlugin: Plugin[] = [
     {
       overrides: {
         components: CMSComponents,
         fields: FieldsComponent,
-        headerActions: ({ children }) => {
-          return (
-            <>
-            <Button onClick={props.onPreview} disabled={props.isLoading}>
-              <Eye className="mr-2 h-4 w-4" /> {props.isLoading ? "Saving..." : "Preview"}
-            </Button>
-            <Button onClick={props.onPublish} disabled={props.isLoading}>
-              <Globe className="mr-2 h-4 w-4" /> {props.isLoading ? "Saving..." : "Publish"}
-            </Button> 
-          </>        
-          );
-        },
-        puck: () => <CustomPuck dataKey={"key-1"}/>
+        headerActions: () => (
+          <HeaderActions
+            handlePreviewClick={handlePreviewClick}
+            handlePublishClick={handlePublishClick}
+            isLoading={isLoading}
+          />
+        ),
+        puck: () => (
+          <CustomPuck 
+            dataKey={"key-1"} 
+            handlePreviewClick={handlePreviewClick}
+            handlePublishClick={handlePublishClick}
+            isLoading={isLoading}
+          />
+        )
       },
     },
   ];

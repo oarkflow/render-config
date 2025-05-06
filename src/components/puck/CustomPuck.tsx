@@ -20,8 +20,19 @@ const config = {
 
 const initialData = {};
 
+interface CustomPuckProps {
+	dataKey: string;
+	handlePreviewClick?: () => void;
+	handlePublishClick?: () => void;
+	isLoading?: boolean;
+}
 
-export const CustomPuck = ({dataKey}:{dataKey:string}) => {
+export const CustomPuck = ({
+	dataKey,
+	handlePreviewClick,
+	handlePublishClick,
+	isLoading = false
+}: CustomPuckProps) => {
 	const {appState} = usePuck()
 	const { leftSideBarVisible, rightSideBarVisible } = appState.ui;
 	return (
@@ -44,7 +55,21 @@ export const CustomPuck = ({dataKey}:{dataKey:string}) => {
 					</div>
 				)}
 				<div className="flex-1 flex-grow px-2 border-x">
-					<Puck.Header/>
+					{/* Replace default header with custom one that includes our handlers */}
+					{handlePreviewClick && handlePublishClick ? (
+						<div className="flex justify-between items-center bg-white p-4 border-b">
+							<div>Puck Editor</div>
+							<div className="flex gap-2">
+								<HeaderActions 
+									handlePreviewClick={handlePreviewClick}
+									handlePublishClick={handlePublishClick}
+									isLoading={isLoading}
+								/>
+							</div>
+						</div>
+					) : (
+						<Puck.Header/>
+					)}
 					<div className=" h-[calc(100svh-60px)] bg-slate-100">
 						<Puck.Canvas/>
 					</div>
@@ -60,6 +85,15 @@ export const CustomPuck = ({dataKey}:{dataKey:string}) => {
 }
 
 export const CustomPuckPage = () => {
+	// We could pass these handlers from outside if needed
+	const handlePreviewClick = () => {
+		console.log("Preview clicked from CustomPuckPage");
+	};
+
+	const handlePublishClick = () => {
+		console.log("Publish clicked from CustomPuckPage");
+	};
+
 	return (
 		<>
 			<Puck
@@ -69,8 +103,19 @@ export const CustomPuckPage = () => {
 					enabled: false,
 				}}
 				overrides={{
-					headerActions: HeaderActions,
-					puck: () => <CustomPuck dataKey={"key-1"}/>
+					headerActions: () => (
+						<HeaderActions
+							handlePreviewClick={handlePreviewClick}
+							handlePublishClick={handlePublishClick}
+							isLoading={false}
+						/>
+					),
+					puck: () => <CustomPuck 
+						dataKey={"key-1"} 
+						handlePreviewClick={handlePreviewClick}
+						handlePublishClick={handlePublishClick}
+						isLoading={false}
+					/>
 				}}
 			>
 			
