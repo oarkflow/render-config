@@ -2,7 +2,7 @@
 import type { Plugin } from "@/packages/measured/puck";
 // import { RefreshCw } from "lucide-react";
 import FieldsComponent from "./plugin/FieldsComponent";
-import HeaderActions from "./plugin/HeaderActions";
+// import HeaderActions from "./plugin/HeaderActions";
 import CMSComponents from "./plugin/CMSComponents";
 import { CustomPuck } from "./CustomPuck";
 
@@ -23,7 +23,7 @@ const PuckPlugin: Plugin[] = [
       //   </ActionBar>
       // ),
       fields: FieldsComponent,
-      headerActions: HeaderActions,
+      // headerActions: HeaderActions,
       puck: () => <CustomPuck dataKey={"key-1"}/>
     },
   },
