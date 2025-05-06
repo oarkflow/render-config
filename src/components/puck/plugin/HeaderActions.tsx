@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import { Eye, Globe } from "lucide-react";
 import { toPng } from "html-to-image";
 import { uploadFile } from "@/lib/api";
-import PublishPopup from "../PublishPopup";
 
 // interface HeaderActionsProps {
 //   children: ReactNode;
@@ -21,7 +20,6 @@ const HeaderActions = () => {
   const { appState } = usePuck();
   const [isLoading, setIsLoading] = useState(false);
   const [pageId, setPageId] = useState<number>();
-  const [showPopup, setShowPopup] = useState(false);
   const [localJsonData, setLocalJsonData] = useState<Record<string, any>>({});
 
   function removeCustomElements(data: any) {
@@ -252,7 +250,6 @@ const HeaderActions = () => {
         },
       });
 
-      setShowPopup(true);
       toast.success("Template published successfully.");
     } catch (error) {
       console.error("Error saving template:", error);
@@ -271,7 +268,6 @@ const HeaderActions = () => {
       <Button onClick={handlePublishClick} disabled={isLoading}>
         <Globe className="mr-2 h-4 w-4" /> {isLoading ? "Saving..." : "Publish"}
       </Button>
-      {showPopup && <PublishPopup setOpen={setShowPopup} open={showPopup} />}
     </>
   );
 };
