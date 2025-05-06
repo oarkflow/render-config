@@ -47,20 +47,7 @@ export default function WebBuilder(props: PuckProps) {
         headerActions: ({ children }) => {
           return (
             <HeaderActions onPreview={props.onPreview} children={children} />
-            //   {children}
-            //   <Button
-            //     onClick={(e) => {
-            //       e.preventDefault();
-            //       const { appState } = usePuck();
-            //       const currentData = appState.data;
-            //       console.log(currentData,"currentData");
-            //       // handlePublish(currentData);
-            //       window.open(`/app-preview?nodeId=${nodeId}`, "_blank");
-            //      }}
-            //   >
-            //     Preview
-            //   </Button>
-            // </div>
+          
           );
         },
       },

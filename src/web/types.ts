@@ -200,4 +200,5 @@ export interface PuckProps {
   onPublish: (data: unknown) => void;
   onPreview: (data: unknown) => void;
   config?: Config;
+  isLoading?: boolean;
 }
