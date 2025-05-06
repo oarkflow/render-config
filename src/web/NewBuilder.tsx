@@ -6,7 +6,12 @@ import PuckConfig from "../components/puck/PuckConfig";
 import { PuckProps } from "./types";
 import { Plugin } from "../packages/measured/puck";
 import { DefaultData } from "./default";
-import { Computer, Eye, Globe, Laptop2Icon, Smartphone, Tablet } from "lucide-react";
+import {
+  Computer,
+  Laptop2Icon,
+  Smartphone,
+  Tablet,
+} from "lucide-react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { lazy, Suspense, useState } from "react";
 import CMSComponents from "@/components/puck/plugin/CMSComponents";
@@ -14,6 +19,8 @@ import FieldsComponent from "@/components/puck/plugin/FieldsComponent";
 import { Button } from "@/components/ui";
 import { CustomPuck } from "@/components/puck/CustomPuck";
 import HeaderActions from "@/components/puck/plugin/HeaderActions";
+import "../main.css";
+import "../packages/measured/puck/puck.css";
 // Render Puck editor
 export interface WebBuilderProps extends PuckProps {}
 const PuckEditor = lazy(() =>
@@ -21,7 +28,6 @@ const PuckEditor = lazy(() =>
     default: module.Puck,
   }))
 );
-
 
 export default function WebBuilder(props: WebBuilderProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,17 +57,16 @@ export default function WebBuilder(props: WebBuilderProps) {
           />
         ),
         puck: () => (
-          <CustomPuck 
-            dataKey={"key-1"} 
+          <CustomPuck
+            dataKey={"key-1"}
             handlePreviewClick={handlePreviewClick}
             handlePublishClick={handlePublishClick}
             isLoading={isLoading}
           />
-        )
+        ),
       },
     },
   ];
- 
 
   return (
     <ErrorBoundary>
