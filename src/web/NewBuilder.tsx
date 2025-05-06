@@ -20,11 +20,11 @@ import { Button } from "@/components/ui";
 import { CustomPuck } from "@/components/puck/CustomPuck";
 import HeaderActions from "@/components/puck/plugin/HeaderActions";
 import "../main.css";
-import "../packages/measured/puck/puck.css";
+import "@/packages/measured/puck/puck.css";
 // Render Puck editor
 export interface WebBuilderProps extends PuckProps {}
 const PuckEditor = lazy(() =>
-  import("../packages/measured/puck").then((module) => ({
+  import("@/packages/measured/puck").then((module) => ({
     default: module.Puck,
   }))
 );
