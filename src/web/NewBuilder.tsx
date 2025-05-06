@@ -4,7 +4,7 @@
 import PuckConfig from "../components/puck/PuckConfig";
 // import PuckPlugin from "../components/puck/PuckPlugin"
 import { PuckProps } from "./types";
-import { Plugin } from "../packages/measured/puck";
+import { Plugin, Puck } from "@/packages/measured/puck";
 import { DefaultData } from "./default";
 import {
   Computer,
@@ -19,15 +19,15 @@ import FieldsComponent from "@/components/puck/plugin/FieldsComponent";
 import { Button } from "@/components/ui";
 import { CustomPuck } from "@/components/puck/CustomPuck";
 import HeaderActions from "@/components/puck/plugin/HeaderActions";
-import "../main.css";
+import "@/main.css";
 import "@/packages/measured/puck/puck.css";
 // Render Puck editor
 export interface WebBuilderProps extends PuckProps {}
-const PuckEditor = lazy(() =>
-  import("@/packages/measured/puck").then((module) => ({
-    default: module.Puck,
-  }))
-);
+// const PuckEditor = lazy(() =>
+//   import("@/packages/measured/puck").then((module) => ({
+//     default: module.Puck,
+//   }))
+// );
 
 export default function WebBuilder(props: WebBuilderProps) {
   const handlePreviewClick = () => {
@@ -71,7 +71,7 @@ export default function WebBuilder(props: WebBuilderProps) {
           </div>
         }
       >
-        <PuckEditor
+        <Puck
           config={props.config ? props.config : PuckConfig}
           plugins={MyPlugin}
           data={props.initialData || DefaultData}
